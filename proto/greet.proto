@@ -1,0 +1,42 @@
+syntax="proto3";
+// package name for our proto file
+package greet_service;
+// the greet.proto file is the file where the remote procedure calls are defined in 
+// the client and server functions are also created here 
+// the files that will get created will get created/generated in this directory "./proto"
+option go_package = "./proto";
+
+service GreetService {
+    
+    rpc SayHello(NoParam) returns (HelloResponse);               // unary rpc
+
+    rpc SayHelloServerStreaming(NamesList) returns (stream HelloResponse); // rpc for server-side streaming: the client sends a request NamesList and the server returns a stream of HelloResponse 
+
+    rpc SayHelloClientStreaming(stream HelloRequest) returns (MessagesList); // rpc for client streaming: from the client a stream goes to the server but the server responds with a simple response MessagesList
+
+    rpc SayHelloBidirectionalStreaming(stream HelloRequest) returns (stream HelloResponse); // this is the most commonly used. rpc for bidireactional streaming: streaming from both sides it accepts a stream and also returns a stream 
+
+}
+//  Noparam needs to be defined 
+message NoParam{};
+
+message HelloRequest{
+    string name = 1;
+}
+
+message HelloResponse{
+    string message = 1;
+}
+
+message NamesList{
+    repeated string names =1;
+}
+
+message MessagesList{
+    repeated string messages = 1;
+}
+// remote procedure calls (rpc) basically works in a way where by the client directly calls the functions at the server-side 
+
+
+
+
