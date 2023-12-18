@@ -9,7 +9,7 @@ import (
 
 // unary api calls
 func callSayHello(client pb.GreetServiceClient) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
 	resp, err := client.SayHello(ctx, &pb.NoParam{}) // when calling client.SayHello you are sending a request which is NoParam to the server. a response is expected from the server and saved in the resp variable
